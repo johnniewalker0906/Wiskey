@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>테토남(여)·에겐남(여) 테스트 — 단일 HTML</title>
+  <style>
+    :root{
+      --bg:#0b0c10; --panel:#111319; --muted:#8b93a3; --text:#e9ecf1; --brand:#7c5cff; --brand2:#20c997; --danger:#ff5c7a; --ok:#2ecc71;
+      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Malgun Gothic,sans-serif; color:var(--text); background:radial-gradient(1200px 1200px at 100% -20%, rgba(124,92,255,.18), transparent 40%), radial-gradient(900px 900px at -20% 110%, rgba(32,201,151,.14), transparent 40%), var(--bg);}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{position:sticky; top:0; z-index:5; backdrop-filter:saturate(1.2) blur(10px); background:linear-gradient(180deg, rgba(11,12,16,.9), rgba(11,12,16,.7)); border-bottom:1px solid #1c2030}
+    .nav{display:flex; gap:14px; align-items:center; padding:14px 18px; max-width:1100px; margin:0 auto}
+    .logo{font-weight:800; letter-spacing:.2px}
+    .pill{padding:6px 10px; background:#151827; border:1px solid #23283d; border-radius:999px; color:var(--muted);}
+    .wrap{max-width:1100px; margin:32px auto; padding:0 18px; display:grid; grid-template-columns:280px 1fr; gap:24px}
+    @media (max-width: 980px){.wrap{grid-template-columns:1fr}}
+    .toc{position:sticky; top:74px; align-self:start; background:linear-gradient(180deg,#0f1220,#0d1019); border:1px solid #22263a; border-radius:var(--radius); box-shadow:var(--shadow); padding:14px}
+    .toc h3{margin:6px 8px 10px; font-size:.95rem; color:#b9c1d6}
+    .toc a{display:block; padding:6px 10px; border-radius:10px; color:#b8bfd2}
+    .toc a:hover{background:#171b2b}
+    main{display:flex; flex-direction:column; gap:22px}
+    section{background:linear-gradient(180deg,#0f1220,#0e111a); border:1px solid #22263a; border-radius:var(--radius); box-shadow:var(--shadow); padding:22px}
+    section h2, h3{margin-top:0}
+    .tag{display:inline-flex; gap:8px; align-items:center; font-size:.86rem; padding:4px 10px; border-radius:999px; color:#cbd2e3; background:#1a1f31; border:1px solid #2a3151}
+    .grid{display:grid; gap:14px}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:800px){.grid.two,.grid.three{grid-template-columns:1fr}}
+    details{background:#101425; border:1px solid #232a47; border-radius:12px; padding:10px 12px}
+    details>summary{cursor:pointer; color:#c6cbe0; font-weight:600}
+    .muted{color:var(--muted)}
+    .kv{display:flex; gap:8px; flex-wrap:wrap}
+    .kv b{min-width:120px; color:#bcd0ff}
+    .badge{font-size:.78rem; padding:3px 8px; border-radius:999px; background:#19223a; border:1px solid #2a355d; color:#c7d0eb}
+    /* Quiz */
+    .quiz{background:linear-gradient(180deg,#0b1022,#0a0f1b); border:1px solid #253052; border-radius:var(--radius); padding:0}
+    .quiz header{position:relative; top:auto; background:transparent; border:0}
+    .quiz .head{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; padding:18px 18px 0}
+    .quiz .progress{height:6px; background:#1a223a; border-radius:999px; overflow:hidden; margin:10px 18px}
+    .quiz .bar{height:100%; width:0; background:linear-gradient(90deg,var(--brand),var(--brand2)); transition:width .4s ease}
+    .q{padding:16px 18px; border-top:1px solid #202744}
+    .q h4{margin:0 0 10px}
+    .opt{display:grid; gap:10px}
+    .opt label{display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid #2a3358; background:#0e1430; border-radius:12px; cursor:pointer}
+    .opt input{margin-top:3px}
+    .actions{display:flex; gap:10px; justify-content:flex-end; padding:14px 18px}
+    .btn{appearance:none; border:1px solid #2b335a; background:#151c39; color:#eaefff; padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:700}
+    .btn.primary{border-color:transparent; background:linear-gradient(90deg,var(--brand),var(--brand2))}
+    .btn:disabled{opacity:.5; cursor:not-allowed}
+    .result{display:none; padding:18px}
+    .result.show{display:block}
+    .pillnote{font-size:.85rem; color:#aeb6cc}
+    .callout{border-left:4px solid var(--brand); background:#0f1428; padding:12px 14px; border-radius:10px}
+    code.inline{background:#161c30; border:1px solid #252f53; padding:2px 6px; border-radius:8px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">🧪 테토·에겐 성향 테스트</div>
+      <div class="pill">재미용 밈 · 과학 아님</div>
+      <div style="margin-left:auto" class="muted">단일 HTML · 오프라인 작동</div>
+    </div>
+  </header>
+  <div class="wrap">
+    <aside class="toc">
+      <h3>목차</h3>
+      <a href="#sec1">1. 개요</a>
+      <a href="#sec2">2. 유래</a>
+      <a href="#sec3">3. 주요 개념</a>
+      <a href="#sec31">3.1 연애 먹이사슬</a>
+      <a href="#sec32">3.2 테토남</a>
+      <a href="#sec33">3.3 에겐남</a>
+      <a href="#sec34">3.4 테토녀</a>
+      <a href="#sec35">3.5 에겐녀</a>
+      <a href="#sec36">3.6 테스트</a>
+      <a href="#sec4">4. 오해와 진실</a>
+      <a href="#sec5">5. 대중 매체</a>
+      <a href="#sec6">6. 비판</a>
+      <a href="#sec7">7. 유사 유형</a>
+    </aside>
+
+    <main>
+      <!-- Test Card at top -->
+      <section id="quiz" class="quiz">
+        <div class="head">
+          <h2>빠른 자가 진단 테스트</h2>
+          <div class="kv">
+            <span class="badge">재미용</span>
+            <span class="badge">익명 · 로컬 계산</span>
+          </div>
+        </div>
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <form id="form">
+          <div class="q">
+            <h4>성별 선택</h4>
+            <div class="opt">
+              <label><input type="radio" name="gender" value="male" required> 남성</label>
+              <label><input type="radio" name="gender" value="female"> 여성</label>
+            </div>
+          </div>
+          <!-- 10 core questions: 점수 체계 (T축 +1 / E축 +1) -->
+          <div class="q">
+            <h4>1) 모임에서의 나는…</h4>
+            <div class="opt">
+              <label><input type="radio" name="q1" value="T" required> 주도적으로 계획을 세우고 진행을 리드한다</label>
+              <label><input type="radio" name="q1" value="E"> 분위기를 읽고 공감하며 대화를 채운다</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>2) 갈등이 생기면…</h4>
+            <div class="opt">
+              <label><input type="radio" name="q2" value="T" required> 직면해서 해결한다</label>
+              <label><input type="radio" name="q2" value="E"> 감정을 다독이며 시간을 두고 정리한다</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>3) 취향의 무게 중심</h4>
+            <div class="opt">
+              <label><input type="radio" name="q3" value="T" required> 실용·성과·문제해결</label>
+              <label><input type="radio" name="q3" value="E"> 감성·미학·분위기</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>4) 주말 계획</h4>
+            <div class="opt">
+              <label><input type="radio" name="q4" value="T" required> 활동적인 일정(운동, 야외, 도전)</label>
+              <label><input type="radio" name="q4" value="E"> 정적인 일정(독서, 전시, 카페)</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>5) 호감 표현 방식</h4>
+            <div class="opt">
+              <label><input type="radio" name="q5" value="T" required> 행동으로 보여준다(직접 대시, 선물/실행)</label>
+              <label><input type="radio" name="q5" value="E"> 말과 분위기로 전한다(대화, 공감, 섬세함)</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>6) 관심사 스펙트럼</h4>
+            <div class="opt">
+              <label><input type="radio" name="q6" value="T" required> 사회·외부 세계·성과 중심</label>
+              <label><input type="radio" name="q6" value="E"> 내면·예술·개인 세계 중심</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>7) 스타일 성향</h4>
+            <div class="opt">
+              <label><input type="radio" name="q7" value="T" required> 간결·클래식/스트릿 실용</label>
+              <label><input type="radio" name="q7" value="E"> 디테일·감성·트렌드 미학</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>8) 에너지 방향</h4>
+            <div class="opt">
+              <label><input type="radio" name="q8" value="T" required> 외향적 양기(밀어붙이기)</label>
+              <label><input type="radio" name="q8" value="E"> 내향적 음기(깊이와 여운)</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>9) 결정 스타일</h4>
+            <div class="opt">
+              <label><input type="radio" name="q9" value="T" required> 빠르게 결단하고 실행</label>
+              <label><input type="radio" name="q9" value="E"> 충분히 느끼고 고민 후 선택</label>
+            </div>
+          </div>
+          <div class="q">
+            <h4>10) 연애에서 더 중요한 것</h4>
+            <div class="opt">
+              <label><input type="radio" name="q10" value="T" required> 안정적 행동력과 책임</label>
+              <label><input type="radio" name="q10" value="E"> 정서적 교감과 섬세함</label>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="reset" class="btn" id="resetBtn">초기화</button>
+            <button type="submit" class="btn primary" id="goBtn" disabled>결과 보기</button>
+          </div>
+        </form>
+        <div class="result" id="result">
+          <h3>결과</h3>
+          <p class="pillnote">※ 밈 기반 재미용입니다. 실제 성격·호르몬과 무관하며, 낙인/차별적 사용을 지양하세요.</p>
+          <div id="typeBox" class="callout" style="margin:12px 0"></div>
+          <p id="pairing"></p>
+          <details>
+            <summary>점수 해석 보기</summary>
+            <p>10문항 중 <b>T 응답 수 ≥ 6</b>이면 <b>테토 성향</b>, 그 미만이면 <b>에겐 성향</b>으로 분류했습니다. 선택한 성별과 조합하여 <i>테토남/에겐남/테토녀/에겐녀</i>를 표시합니다.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="sec1">
+        <h2>1. 개요</h2>
+        <p>테토-에겐 성격 유형은 인간의 연애 및 성격 유형을 분류하는 인터넷 밈이다. ‘테토/에겐’은 각각 <b>테스토스테론</b>과 <b>에스트로겐</b>을 줄인 말로, 성 호르몬에 따른 특징을 토대로 성향을 설명한다. 이전의 MBTI나 혈액형 성격설과 유사하게 <b>유사과학</b>에 기반한 밈으로 보아야 하며, <span class="badge">오락용</span>으로만 소비하는 것을 권한다.</p>
+      </section>
+
+      <section id="sec2">
+        <h2>2. 유래</h2>
+        <p>이 신조어는 2021년 6월 2일 네이버 블로그 <i>수성일기</i>에서 다이어트 콘텐츠 크리에이터 <b>이상수</b>가 제시한 <q>연애 먹이사슬</q> 포스팅에서 비롯되었다고 알려져 있다. 이후 2024년 3월 21일 인스타툰 작가 <b>내쪼</b>가 웹툰 형식으로 재구성해 게시했고, 2025년 중반 ‘테토남’, ‘에겐녀’ 등이 크게 유행했다.</p>
+      </section>
+
+      <section id="sec3">
+        <h2>3. 주요 개념</h2>
+        <p>테스토스테론형과 에스트로겐형의 상호작용은 고정 궁합이 아닌 <b>순환 구조</b>로 설명된다. 각 유형은 자신에게 부족한 성향을 보완해 줄 상대에게 끌리는 경향이 있다.</p>
+      </section>
+
+      <section id="sec31">
+        <h3>3.1 연애 먹이사슬의 순환 구조</h3>
+        <p class="callout">기본 흐름: <b>에겐녀 → 에겐남 → 테토녀 → 테토남 → 에겐녀</b></p>
+        <ul>
+          <li><b>에겐녀 → 에겐남</b>: 감수성과 정서를 이해해주는 상대에게 끌림. 반면 테토남의 직선적 강함은 부담일 수 있음.</li>
+          <li><b>에겐남 → 테토녀</b>: 추진력·에너지 보완에 매력. 에겐녀와는 감정선이 겹쳐 피로감이나 동족혐오가 있을 수 있음.</li>
+          <li><b>테토녀 → 테토남</b>: 더 강한 양기에 끌림. 에겐남과는 연애 코드가 어긋나기 쉬움.</li>
+          <li><b>테토남 → 에겐녀</b>: 부드러운 여성성과 섬세함에 호감. 테토녀와는 주도권 충돌 가능.</li>
+        </ul>
+        <p>네 유형은 서로의 부족함을 채우며 고리처럼 맞물린다.</p>
+      </section>
+
+      <section id="sec32">
+        <h3>3.2 테토남 (테스토스테론 남성)</h3>
+        <div class="grid two">
+          <div>
+            <h4>성격적 특성</h4>
+            <ul>
+              <li>공격성·사냥 본능, 강한 자기주장과 리더십</li>
+              <li>감정보다 논리, 현실·성과 지향</li>
+              <li>단순 결단형, 도전 선호, 적응력 높음</li>
+              <li>패션·향수엔 비교적 둔감, 간결·클래식 선호</li>
+            </ul>
+          </div>
+          <div>
+            <h4>사회/연애 특성</h4>
+            <ul>
+              <li>외향적 활동량, 단체 커뮤니케이션 강점</li>
+              <li>행동 중심 호감표현, 빠른 결단·진행</li>
+              <li>갈등 직면 선호, 주도권 추구</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec33">
+        <h3>3.3 에겐남 (에스트로겐 남성)</h3>
+        <div class="grid two">
+          <div>
+            <h4>성격적 특성</h4>
+            <ul>
+              <li>섬세·감수성, 타인 감정에 민감</li>
+              <li>내면·예술·철학 지향, 정적 취미</li>
+              <li>트렌드·미적 감각이 발달한 경우多</li>
+            </ul>
+          </div>
+          <div>
+            <h4>사회/연애 특성</h4>
+            <ul>
+              <li>혼자만의 시간 중시, SNS 표현 익숙</li>
+              <li>수동적 경향, 말·분위기로 감정 표현</li>
+              <li>정서적 유대와 여운을 중시</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec34">
+        <h3>3.4 테토녀 (테스토스테론 여성)</h3>
+        <div class="grid two">
+          <div>
+            <h4>성격/행동 특성</h4>
+            <ul>
+              <li>활발·도전적·독립적, 빠른 판단</li>
+              <li>활동적 취미, 건강한 에너지</li>
+              <li>트렌디 스타일 소화력(스트릿·힙 등)</li>
+            </ul>
+          </div>
+          <div>
+            <h4>연애 특성</h4>
+            <ul>
+              <li>직설·선대시 가능, 행동·현실 중시</li>
+              <li>여성스러운 남성(에겐남)에게서 호감 받기 쉬우나, 본인은 대개 남성적 에너지에 끌림</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec35">
+        <h3>3.5 에겐녀 (에스트로겐 여성)</h3>
+        <div class="grid two">
+          <div>
+            <h4>성격/행동 특성</h4>
+            <ul>
+              <li>온화·정적·섬세, 공감력 높음</li>
+              <li>클래식·여성스러운 스타일 선호</li>
+              <li>예술·문학·디자인 등 창의 몰입</li>
+            </ul>
+          </div>
+          <div>
+            <h4>연애 특성</h4>
+            <ul>
+              <li>수동적 경향, 대시를 받는 편</li>
+              <li>정서적 교감·안정감 중시, 여운이 길 수 있음</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec36">
+        <h3>3.6 에겐-테토 테스트</h3>
+        <p>위의 <a href="#quiz">자가 진단</a>을 이용하세요. 본 테스트는 비과학적 밈을 바탕으로 하며, <b>오락용</b>입니다. 결과를 맹신하지 마세요.</p>
+        <ul>
+          <li>테토-에겐 성향 테스트 - 타입테스트 (다국어)</li>
+          <li>에겐 테토 테스트 - 테스트모아 (CPU 점유 논란 有)</li>
+          <li>내쪼툰 에겐 테토 - Types</li>
+          <li>테토남 에겐녀 테스트 - 테스트잇</li>
+          <li>에겐 테토 이미지 테스트 - 봉봉(vonvon)</li>
+        </ul>
+      </section>
+
+      <section id="sec4">
+        <h2>4. 오해와 진실</h2>
+        <h4>4.1 테토남은 알파메일인가?</h4>
+        <p>동일 개념이 아니다. 알파메일이 테토남일 수는 있으나, 역은 성립하지 않는다.</p>
+        <h4>4.2 몸이 좋으면 테토남인가?</h4>
+        <p>외형만으로 판단하지 않는다. 핵심은 <b>행동 양식·대인 태도·감정 처리·사고 흐름</b> 등 전반적 성향이다.</p>
+        <h4>4.3 나에겐 연애 먹이사슬이 맞지 않는다?</h4>
+        <p>애초에 과학적 모델이 아니다. 개인은 다양한 취향이 혼재할 수 있다.</p>
+        <h4>4.4 호르몬 수치와 관련?</h4>
+        <p>성호르몬이 행동 경향에 영향 줄 수 있으나, <b>환경·상황</b> 요인이 더 큰 경우가 많고 수치도 변동적이다.</p>
+      </section>
+
+      <section id="sec5">
+        <h2>5. 대중 매체에서</h2>
+        <p>인터넷 기사·방송에서 용어 사용이 확산되며, 본래의 관계 분석 맥락은 퇴색되고 <q>테토스럽다</q> 등 표현이 가벼운 밈으로 소비되는 경향이 있다. 칭찬/조롱의 양가적 사용에 주의할 필요가 있다.</p>
+      </section>
+
+      <section id="sec6">
+        <h2>6. 비판</h2>
+        <h4>6.1 과학적 근거의 부재</h4>
+        <p>호르몬 수치는 변동적이며, 성격은 여러 요인의 상호작용 결과다. 이분법적 분류는 과학적 근거가 약하다.</p>
+        <h4>6.2 성격 유형으로서의 한계</h4>
+        <p>사람을 몇 가지 유형으로 단순화하는 모델의 구조적 한계가 크다. <i>혼합적 성향</i>은 자연스럽다.</p>
+        <h4>6.3 바이럴로 인한 과도한 일반화</h4>
+        <p>겉모습만으로 분류하거나, 일부 요소만 보고 단정하는 오용이 잦다. 오락용으로만 사용하자.</p>
+        <details>
+          <summary>덧: 학술·과학 오남용에 대한 경계</summary>
+          <p>과학 용어를 사회 담론에 무비판적으로 차용하는 관행은 오해를 키울 수 있다. 맥락·한계를 분명히 하는 커뮤니케이션이 중요하다.</p>
+        </details>
+      </section>
+
+      <section id="sec7">
+        <h2>7. 유사한 성격 유형</h2>
+        <p>일부 콘텐츠에서는 옥시토신/바소프레신을 포함해 <q>옥시남/옥시녀/바소남/바소녀</q> 등으로 확장하기도 하나, 이들 역시 검증된 심리척도라기보다 설명적 밈에 가깝다.</p>
+      </section>
+
+      <section>
+        <h3>면책 및 이용 가이드</h3>
+        <ul>
+          <li>본 페이지는 사용자가 제공한 텍스트를 바탕으로 정리·구성되었습니다.</li>
+          <li>진단·치료·상담 등 전문적 판단을 대체하지 않습니다.</li>
+          <li>낙인·차별적 맥락에서의 사용을 금합니다.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const bar = document.getElementById('bar');
+    const resultEl = document.getElementById('result');
+    const typeBox = document.getElementById('typeBox');
+    const pairing = document.getElementById('pairing');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const names = {
+      male: { T: '테토남', E: '에겐남' },
+      female: { T: '테토녀', E: '에겐녀' }
+    };
+
+    const pairHint = {
+      테토남: '상대적으로 섬세하고 정서적인 에겐녀에게 호감이 잘 생길 수 있어요. (갈등 시 주도권 충돌에 주의)',
+      에겐남: '추진력 있는 테토녀에게 매력을 느끼기 쉽습니다. (정서 피로 누적에 유의)',
+      테토녀: '더 강한 양기를 지닌 테토남에게 끌릴 수 있어요. (상대의 과도한 직진에 선 긋기 필요)',
+      에겐녀: '정서적 공감을 해주는 에겐남과 안정감을 느낄 수 있어요. (테토남과는 속도 차 조율 필요)'
+    };
+
+    function updateProgress(){
+      const total = 1 + 10; // gender + 10
+      const filled = Array.from(new FormData(form).entries()).length;
+      bar.style.width = Math.round(filled/total*100) + '%';
+      document.getElementById('goBtn').disabled = filled < total;
+    }
+
+    form.addEventListener('change', updateProgress);
+    form.addEventListener('input', updateProgress);
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(form);
+      const gender = fd.get('gender');
+      let T=0, E=0;
+      for (let i=1;i<=10;i++){
+        const v = fd.get('q'+i);
+        if(v==='T') T++; else E++;
+      }
+      const axis = (T>=6)?'T':'E';
+      const label = names[gender][axis];
+      const pctT = Math.round(T/10*100);
+      const pctE = 100-pctT;
+      typeBox.innerHTML = `<b style="font-size:1.1rem">당신의 결과: ${label}</b><br><span class="muted">(T:${pctT}% · E:${pctE}%)</span>`;
+      pairing.textContent = pairHint[label];
+      resultEl.classList.add('show');
+      resultEl.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    resetBtn.addEventListener('click', ()=>{
+      setTimeout(()=>{
+        resultEl.classList.remove('show');
+        typeBox.innerHTML='';
+        pairing.textContent='';
+        updateProgress();
+      },0);
+    });
+
+    // initial
+    updateProgress();
+  </script>
+</body>
+</html>
